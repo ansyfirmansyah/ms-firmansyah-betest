@@ -1,6 +1,7 @@
 // Import Dependency
 require('dotenv').config();
 const express = require('express');
+const db = require('./config/database/mongo');
 
 // Create variable
 const app = express();
