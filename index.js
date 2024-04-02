@@ -1,9 +1,10 @@
 // Import Dependency
+require('dotenv').config();
 const express = require('express');
 
 // Create variable
 const app = express();
-const port = 3000; // port aplikasi, nantinya akan pakai env
+const port = process.env.PORT; // port aplikasi, nantinya akan pakai env
 
 // Tes endpoint
 app.get('/', (req, res) => {
