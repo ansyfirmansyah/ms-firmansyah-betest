@@ -5,13 +5,19 @@ const db = require('../config/database/mongo');
 const logger = require('./middlewares/loggerMiddleware');
 const status = require('./helpers/statusHelper');
 const errorHandler = require('./middlewares/errorHandlerMiddleware');
+const userRoute = require("./routes/userRoute");
+const swaggerUi = require("swagger-ui-express");
+const apiDocumentation = require("./apidoc.json");
 
 // Create variable
 const app = express();
 const port = process.env.PORT; // port aplikasi, nantinya akan pakai env
 
+app.use('/api/info', swaggerUi.serve, swaggerUi.setup(apiDocumentation));
 app.use(logger);
-app.use(errorHandler);
+app.use(require("sanitize").middleware);
+app.use(express.json({ limit: "5mb" }));
+app.use("/api/v1/user-management", userRoute);
 
 // Tes endpoint
 app.get('/', (req, res) => {
@@ -24,6 +30,7 @@ app.use((req, res, next) => {
         json(status.errorMessage('Not Found'));
 });
 
+app.use(errorHandler);
 
 // Start server
 app.listen(port, () => {

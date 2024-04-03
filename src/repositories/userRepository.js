@@ -1,10 +1,10 @@
 // userRepository.js
-const indexModel = require('../model/index');
-const AbstractRepository = require('./abstractRepository');
+const UserModel = require('../models/userModel');
+const BaseRepository = require('./baseRepostory');
 
-class UserRepository extends AbstractRepository {
+class UserRepository extends BaseRepository {
     constructor() {
-        super(indexModel.User);
+        super(UserModel);
     }
 
     async findByEmail(email) {

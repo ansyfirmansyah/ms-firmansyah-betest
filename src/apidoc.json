@@ -1,0 +1,242 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "description": "API User Documentation",
+        "version": "1.0.0",
+        "title": "Microservice Firmansyah"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1"
+        }
+    ],
+    "tags": [
+        {
+            "name": "user",
+            "description": "Operations about user"
+        }
+    ],
+    "paths": {
+        "/user-management/users": {
+            "get": {
+                "summary": "Ambil semua user",
+                "description": "Ambil semua detail User berdasarkan parameter",
+                "tags": [
+                    "user"
+                ],
+                "parameters": [
+                    {
+                        "name": "accountNumber",
+                        "in": "query",
+                        "description": "Account Number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "identityNumber",
+                        "in": "query",
+                        "description": "Identity Number",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User berhasil didapatkan",
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User tidak ditemukan"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Tambah User",
+                "description": "Menambahkan user baru",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User berhasil ditambahkan"
+                    },
+                    "400": {
+                        "description": "Request tidak valid"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user-management/users/{id}": {
+            "get": {
+                "summary": "Ambil User",
+                "description": "Ambil detail User berdasarkan ID",
+                "tags": [
+                    "user"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID User",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User berhasil didapatkan",
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User tidak ditemukan"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Ubah User",
+                "description": "Mengubah user yang sudah ada berdasarkan Id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID User",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User berhasil ditambahkan"
+                    },
+                    "400": {
+                        "description": "Request tidak valid"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "summary": "Hapus User",
+                "description": "Hapus user yang sudah ada berdasarkan Id",
+                "tags": [
+                    "user"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID User",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User berhasil dihapus",
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    },
+                    "404": {
+                        "description": "User tidak ditemukan"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "type": "string",
+                        "example": "firmansyah"
+                    },
+                    "identityNumber": {
+                        "type": "string",
+                        "example": "1234567890123456"
+                    },
+                    "emailAddress": {
+                        "type": "string",
+                        "example": "test@test.com"
+                    },
+                    "accountNumber": {
+                        "type": "string",
+                        "example": "1234567890"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

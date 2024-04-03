@@ -17,7 +17,9 @@ BaseSchema.pre('save', function(next) {
     this.updateTimestamps();
     next();
 });
+BaseSchema.pre('update', function(next) {
+    this.updateTimestamps();
+    next();
+});
 
-const BaseModel = mongoose.model('BaseModel', BaseSchema);
-
-module.exports = BaseModel;
+module.exports = BaseSchema;
