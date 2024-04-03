@@ -14,6 +14,18 @@ status.errorMessage = (ress) => ({
     data: ress,
 });
 
+status.invalidToken = () => ({
+    code: "02",
+    status: false,
+    message: "invalid_token"
+});
+
+status.expiredToken = () => ({
+    code: "02",
+    status: false,
+    message: "expired_token"
+});
+
 status.statusCode = {
     success: 200,
     error: 500,

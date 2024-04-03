@@ -15,11 +15,43 @@
     ],
     "tags": [
         {
+            "name": "auth",
+            "description": "Generate Token"
+        },
+        {
             "name": "user",
             "description": "Operations about user"
         }
     ],
     "paths": {
+        "/auth/token": {
+            "post": {
+                "summary": "Generate Token",
+                "tags": [
+                    "auth"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token berhasil didapatkan"
+                    },
+                    "401": {
+                        "description": "User dan/atau Password salah"
+                    },
+                    "500": {
+                        "description": "Terjadi kesalahan pada server"
+                    }
+                }
+            }
+        },
         "/user-management/users": {
             "get": {
                 "summary": "Ambil semua user",
@@ -212,6 +244,19 @@
     },
     "components": {
         "schemas": {
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string",
+                        "example": "user"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                }
+            },
             "User": {
                 "type": "object",
                 "properties": {
