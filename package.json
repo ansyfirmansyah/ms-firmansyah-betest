@@ -27,5 +27,8 @@
     "sanitize": "^2.1.2",
     "swagger-ui-express": "^5.0.0",
     "winston": "^3.13.0"
+  },
+  "engines": {
+    "node": "16.20.2"
   }
 }
