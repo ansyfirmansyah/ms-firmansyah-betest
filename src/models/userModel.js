@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// Membuat skema user dengan index userName
 const UserSchema = new mongoose.Schema({
     userName: {
         type: String,

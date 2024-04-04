@@ -4,13 +4,14 @@ const helper = require('../helpers/globalHelper');
 const UserRepository = require('../repositories/userRepository');
 const controller = {};
 
+// Inisialisasi User Repository untuk interaksi dengan DB
 const userRepository = new UserRepository();
 
 controller.getAll = async (req, res, next) => {
     try {
         const user = await userRepository.findAll(req.query);
         const redisKey = helper.getRedisKeyByReqQuery(req.query);
-        // simpan di redis
+        // simpan data di redis
         if (user) {
             redisClient.setEx(redisKey, 120, JSON.stringify(user), (err) => {
                 if (err) {
@@ -30,7 +31,7 @@ controller.get = async (req, res, next) => {
     try {
         const user = await userRepository.findById(req.params.id)
         const redisKey = `userId:${req.params.id}`
-        // simpan di redis
+        // simpan data di redis
         if (user) {
             redisClient.setEx(redisKey, 120, JSON.stringify(user), (err) => {
                 if (err) {

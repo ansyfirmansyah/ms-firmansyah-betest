@@ -15,20 +15,14 @@ const errorHandler = (err, req, res, next) => {
 	if (err.statusCode) {
 		statusCode = err.statusCode
 	}
-	if (err.name === 'SequelizeDatabaseError') {
-		message = 'Something went wrong [code 1001]'
-		statusCode = status.statusCode.error
-	}
-	if (err.message?.includes('bind parameter') || err.message?.includes('WHERE parameter')) {
-		message = 'Something went wrong [code 1001]'
-		statusCode = status.statusCode.error
-	}
+	// default error message ketika uncaught error terkait type error
 	if (err.name === 'TypeError') {
-		message = 'Something went wrong [code 1002]'
+		message = 'Something went wrong [code 1000]'
 		statusCode = status.statusCode.error
 	}
+		// default error message ketika uncaught error terkait reference error
 	if (err.name === 'ReferenceError') {
-		message = 'Something went wrong [code 1003]'
+		message = 'Something went wrong [code 1001]'
 		statusCode = status.statusCode.error
 	}
 	res.status(statusCode).json(status.errorMessage(message));

@@ -1,14 +1,13 @@
-// Import Dependency
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-// Create variable
+// URL Mongo DB
 const mongoURI = `${process.env.DB_URL}`;
 
-// Open connection
+// Buka koneksi ke Mongo DB
 mongoose.connect(mongoURI, { dbName: 'db_firmansyah_betest' })
   .then(() => {
-    console.log('Koneksi MongoDB berhasil!');
+    console.log('Koneksi MongoDB berhasil.');
   })
   .catch(err => {
     console.error('Koneksi MongoDB gagal:', err);

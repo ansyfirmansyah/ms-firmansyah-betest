@@ -1,5 +1,6 @@
 const status = {}
 
+// struktur default ketika respon sukses dengan source langsung dari DB
 status.successMessage = (ress) => ({
     code: "01",
     status: true,
@@ -8,6 +9,7 @@ status.successMessage = (ress) => ({
     data: ress,
 });
 
+// struktur default ketika respon sukses dengan source dari cache / redis
 status.successMessageFromCache = (ress) => ({
     code: "01",
     status: true,

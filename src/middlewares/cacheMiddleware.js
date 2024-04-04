@@ -5,6 +5,7 @@ const cache = {};
 
 cache.getOneUser = async (req, res, next) => {
     try {
+        // ambil data dengan key default adalah id dari user
         const key = `userId:${req.params.id}`;
         const result = await redisClient.get(key);
         if (result) {
@@ -23,6 +24,7 @@ cache.getOneUser = async (req, res, next) => {
 
 cache.getAllUser = async (req, res, next) => {
     try {
+        // ambil data dengan key dari query param
         const key = helper.getRedisKeyByReqQuery(req.query);
         const result = await redisClient.get(key);
         if (result) {

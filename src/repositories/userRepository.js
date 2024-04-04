@@ -7,9 +7,7 @@ class UserRepository extends BaseRepository {
         super(UserModel);
     }
 
-    async findByEmail(email) {
-        return await this.model.findOne({ emailAddress: email });
-    }
+    // Jika dibutuhkan, bisa ditambahkan function spesifik untuk class User
 }
 
 module.exports = UserRepository;

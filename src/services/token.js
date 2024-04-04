@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
-const moment = require("moment");
 
 const service = {};
 
+// Fungsi untuk create token berdasarkan data user
 service.createToken = async (user) => {
     let token = jwt.sign(
         {

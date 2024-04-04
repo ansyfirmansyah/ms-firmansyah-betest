@@ -2,12 +2,12 @@
 # Project Title
 
 Microservice untuk CRUD user
-Bahasa Pemrograman: Javascript (Node JS)
-Framework: Express JS
-Database: Mongo DB
-Cache: Redis
-Auth: JWT
-API Documentation: OpenAPI 3.0.3
+1. Bahasa Pemrograman: Javascript (Node JS)
+2. Framework: Express JS
+3. Database: Mongo DB
+4. Cache: Redis
+5. Auth: JWT
+6. API Documentation: OpenAPI 3.0.3
 
 
 ## Installation

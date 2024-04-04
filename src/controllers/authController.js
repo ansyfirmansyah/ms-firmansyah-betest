@@ -5,6 +5,7 @@ const controller = {};
 controller.post = async (req, res, next) => {
     try {
         const { user, password } = req.body
+        // kondisi saat ini, user dan password di-set di env
         if (user != process.env.DEFAULT_USER_JWT || password != process.env.DEFAULT_PASS_JWT) {
             return res.status(status.statusCode.unauthorized)
                 .json(status.errorMessage('User dan/atau Password salah!'));

@@ -3,14 +3,17 @@ const status = require('../helpers/statusHelper');
 
 const verifyToken = (req, res, next) => {
 	const authHeader = req.headers.authorization;
+	// cek bearer token di header request
 	if (!authHeader) {
 		return res.status(status.statusCode.unauthorized).json(status.invalidToken());
 	}
 	const token = authHeader.split(' ')[1];
+	// cek bearer token di header request
 	if (!token) {
 		return res.status(status.statusCode.unauthorized).json(status.invalidToken());
 	}
 	try {
+		// verify token sesuai key dan waktu berlaku
 		jwt.verify(token, process.env.JWT_TOKEN_KEY, {
 			algorithm: "HS512"
 		}, (error) => {
@@ -24,7 +27,7 @@ const verifyToken = (req, res, next) => {
 			}
 		})
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		return res.status(status.statusCode.unauthorized).json(status.invalidToken());
 	}
 }
