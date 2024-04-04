@@ -4,6 +4,15 @@ status.successMessage = (ress) => ({
     code: "01",
     status: true,
     message: "Success",
+    source: "db",
+    data: ress,
+});
+
+status.successMessageFromCache = (ress) => ({
+    code: "01",
+    status: true,
+    message: "Success",
+    source: "cache",
     data: ress,
 });
 

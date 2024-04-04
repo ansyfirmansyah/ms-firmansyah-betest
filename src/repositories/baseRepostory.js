@@ -26,7 +26,7 @@ class BaseRepository {
 
     async findAll(filter) {
         try {
-            return await this.model.find(filter);
+            return await this.model.find(filter).limit(10);
         } catch (error) {
             throw error;
         }

@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const db = require('../config/database/mongo');
+const cache = require('../config/database/redis');
 const logger = require('./middlewares/loggerMiddleware');
 const status = require('./helpers/statusHelper');
 const errorHandler = require('./middlewares/errorHandlerMiddleware');

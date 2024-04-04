@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const mongoURI = `${process.env.DB_URL}`;
 
 // Open connection
-mongoose.connect(mongoURI)
+mongoose.connect(mongoURI, { dbName: 'db_firmansyah_betest' })
   .then(() => {
     console.log('Koneksi MongoDB berhasil!');
   })
