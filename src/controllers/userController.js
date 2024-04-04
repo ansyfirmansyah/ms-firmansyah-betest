@@ -49,6 +49,11 @@ controller.get = async (req, res, next) => {
 controller.post = async (req, res, next) => {
     try {
         const user = await userRepository.create(req.body)
+        const redisKey = helper.getRedisKeyByReqQuery(req.query);
+        // hapus data di redis
+        if (user) {
+            redisClient.del(redisKey);
+        }
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)
@@ -58,6 +63,13 @@ controller.post = async (req, res, next) => {
 controller.put = async (req, res, next) => {
     try {
         const user = await userRepository.findByIdAndUpdate(req.params.id, req.body)
+        const redisKey = helper.getRedisKeyByReqQuery(req.query);
+        const redisKeyOne = `userId:${req.params.id}`
+        // hapus data di redis
+        if (user) {
+            redisClient.del(redisKey);
+            redisClient.del(redisKeyOne);
+        }
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)
@@ -67,6 +79,13 @@ controller.put = async (req, res, next) => {
 controller.delete = async (req, res, next) => {
     try {
         const user = await userRepository.findByIdAndDelete(req.params.id)
+        const redisKey = helper.getRedisKeyByReqQuery(req.query);
+        const redisKeyOne = `userId:${req.params.id}`
+        // hapus data di redis
+        if (user) {
+            redisClient.del(redisKey);
+            redisClient.del(redisKeyOne);
+        }
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)

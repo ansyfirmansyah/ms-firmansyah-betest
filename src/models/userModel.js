@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
-const BaseSchema = require('./baseModel');
 
 // Membuat skema user dengan index userName
 const UserSchema = new mongoose.Schema({
     userName: {
         type: String,
+        unique: true,
         required: true
     },
     accountNumber: {
         type: String,
+        index: true,
         unique: true,
         required: true
     },
@@ -20,16 +21,11 @@ const UserSchema = new mongoose.Schema({
     },
     identityNumber: {
         type: String,
+        index: true,
         unique: true,
         required: true
     }
-}).index({
-    userName: 1,
-    emailAddress: 1
-})
-
-// // Tambahkan Base Model
-UserSchema.add(BaseSchema);
+}, { timestamps: true })
 
 const UserModel = mongoose.model('UserModel', UserSchema);
 
