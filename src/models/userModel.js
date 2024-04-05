@@ -24,7 +24,10 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true
     }
-}, { timestamps: true })
+}, {
+    timestamps: true, // auto handle timestamp
+    strict: false // menambah field secara dinamis
+})
 
 const UserModel = mongoose.model('UserModel', UserSchema);
 
