@@ -249,11 +249,11 @@
                 "properties": {
                     "username": {
                         "type": "string",
-                        "example": "user"
+                        "example": "betest"
                     },
                     "password": {
                         "type": "string",
-                        "example": "password"
+                        "example": "betestpassword"
                     }
                 }
             },
