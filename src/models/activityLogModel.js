@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const ActivityLogSchema = new mongoose.Schema({
     action: {
         type: String,
-        required: true
+        default: 'no-action'
     },
     username: {
         type: String
