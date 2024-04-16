@@ -1,15 +1,24 @@
+const requestIP = require('request-ip');
 const winstonConfig = require('../../config/logging/winstonConfig');
 const status = require('../helpers/statusHelper');
+const kafka = require('../../config/queue/kafkaConfig');
 
-const errorHandler = (err, req, res, next) => {
-    winstonConfig.error({
+const errorHandler = async (err, req, res, next) => {
+	const ipAddress = requestIP.getClientIp(req);
+	const errorLog = {
+		ipAddress,
 		message: err.message,
 		stack: err.stack,
 		name: err.name,
 		method: req.method,
 		originalUrl: req.originalUrl,
 		originalErr: err
-	})
+	}
+    winstonConfig.error(errorLog);
+	await kafka.produce(process.env.KAFKA_TOPIC, [{
+		key: "error-log",
+		value: JSON.stringify(errorLog)
+	}])
 	let message = err.message;
 	let statusCode = status.statusCode.bad
 	if (err.statusCode) {

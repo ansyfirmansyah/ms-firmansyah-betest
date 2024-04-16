@@ -44,7 +44,7 @@
                         "description": "Token berhasil didapatkan"
                     },
                     "401": {
-                        "description": "User dan/atau Password salah"
+                        "description": "Username dan/atau Password salah"
                     },
                     "500": {
                         "description": "Terjadi kesalahan pada server"
@@ -247,7 +247,7 @@
             "Login": {
                 "type": "object",
                 "properties": {
-                    "user": {
+                    "username": {
                         "type": "string",
                         "example": "user"
                     },

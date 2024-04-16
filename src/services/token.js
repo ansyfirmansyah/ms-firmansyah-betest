@@ -3,10 +3,10 @@ const jwt = require("jsonwebtoken");
 const service = {};
 
 // Fungsi untuk create token berdasarkan data user
-service.createToken = async (user) => {
+service.createToken = async (username) => {
     let token = jwt.sign(
         {
-            userName: user
+            username: username
         },
         process.env.JWT_TOKEN_KEY,
         {

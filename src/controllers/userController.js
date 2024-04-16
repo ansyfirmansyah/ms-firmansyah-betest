@@ -2,6 +2,7 @@ const redisClient = require('../../config/database/redis');
 const status = require('../helpers/statusHelper');
 const helper = require('../helpers/globalHelper');
 const UserRepository = require('../repositories/userRepository');
+const activityLogService = require('../services/activityLog');
 const controller = {};
 
 // Inisialisasi User Repository untuk interaksi dengan DB
@@ -55,6 +56,13 @@ controller.post = async (req, res, next) => {
         if (user) {
             redisClient.del(redisKey);
         }
+        await activityLogService.produceLog(
+            req, {
+            action: 'create',
+            username: req.headers["x-username"],
+            collection: userRepository?.model?.modelName,
+            data: user
+        });
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)

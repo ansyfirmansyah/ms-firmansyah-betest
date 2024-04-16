@@ -16,13 +16,14 @@ const verifyToken = (req, res, next) => {
 		// verify token sesuai key dan waktu berlaku
 		jwt.verify(token, process.env.JWT_TOKEN_KEY, {
 			algorithm: "HS512"
-		}, (error) => {
+		}, (error, result) => {
 			if (error) {
 				if (error?.name == "TokenExpiredError") {
 					return res.status(status.statusCode.unauthorized).json(status.expiredToken());
 				}
 				return res.status(status.statusCode.unauthorized).json(status.invalidToken());
 			} else {
+				req.headers["x-username"] = result.username;
 				next();
 			}
 		})

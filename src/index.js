@@ -12,6 +12,9 @@ const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const apiDocumentation = require("./apidoc.json");
 
+// call consumer kafka
+// require('./worker/userConsumer');
+
 const app = express();
 const port = process.env.PORT; // port aplikasi sesuai env
 

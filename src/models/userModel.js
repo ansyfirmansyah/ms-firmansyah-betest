@@ -29,6 +29,6 @@ const UserSchema = new mongoose.Schema({
     strict: false // menambah field secara dinamis
 })
 
-const UserModel = mongoose.model('UserModel', UserSchema);
+const UserModel = mongoose.model('User', UserSchema);
 
 module.exports = UserModel;
