@@ -23,6 +23,7 @@ const verifyToken = (req, res, next) => {
 				}
 				return res.status(status.statusCode.unauthorized).json(status.invalidToken());
 			} else {
+				// jika verified maka titipkan info username di request header
 				req.headers["x-username"] = result.username;
 				next();
 			}

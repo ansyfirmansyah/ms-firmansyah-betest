@@ -3,6 +3,7 @@ const kafka = require('../../config/queue/kafkaConfig');
 
 const service = {};
 
+// function default untuk send message ke kafka untuk respon non error
 service.produceLog = async (req, data) => {
     const ipAddress = requestIP.getClientIp(req);
     const payload = {

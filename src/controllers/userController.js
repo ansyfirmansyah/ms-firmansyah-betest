@@ -56,6 +56,7 @@ controller.post = async (req, res, next) => {
         if (user) {
             redisClient.del(redisKey);
         }
+        // publish log ke kafka
         await activityLogService.produceLog(
             req, {
             action: 'create',
@@ -79,6 +80,14 @@ controller.put = async (req, res, next) => {
             redisClient.del(redisKey);
             redisClient.del(redisKeyOne);
         }
+        // publish log ke kafka
+        await activityLogService.produceLog(
+            req, {
+            action: 'update',
+            username: req.headers["x-username"],
+            collection: userRepository?.model?.modelName,
+            data: user
+        });
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)
@@ -95,6 +104,14 @@ controller.delete = async (req, res, next) => {
             redisClient.del(redisKey);
             redisClient.del(redisKeyOne);
         }
+        // publish log ke kafka
+        await activityLogService.produceLog(
+            req, {
+            action: 'delete',
+            username: req.headers["x-username"],
+            collection: userRepository?.model?.modelName,
+            data: user
+        });
         res.status(status.statusCode.success).json(status.successMessage(user));
     } catch (error) {
         next(error)

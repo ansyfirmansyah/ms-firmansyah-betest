@@ -1,7 +1,4 @@
 const { Kafka, logLevel } = require('kafkajs');
-const { KAFKA_USERNAME: username, KAFKA_PASSWORD: password } = process.env
-const sasl = username && password ? { username, password, mechanism: 'plain' } : null
-const ssl = !!sasl
 
 class KafkaConfig {
     constructor() {
@@ -9,13 +6,18 @@ class KafkaConfig {
             logLevel: logLevel.INFO,
             clientId: 'kafka_firmansyah_betest',
             brokers: [process.env.KAFKA_URL],
-            ssl,
-            sasl,
+            ssl: true,
+            sasl: {
+                username: process.env.KAFKA_USERNAME,
+                password: process.env.KAFKA_PASSWORD,
+                mechanism: 'plain'
+            },
         });
         this.producer = this.kafka.producer();
         this.consumer = this.kafka.consumer({ groupId: 'user-group' })
     }
 
+    // default function untuk publish ke kafka
     async produce(topic, messages) {
         try {
             await this.producer.connect();
@@ -30,6 +32,7 @@ class KafkaConfig {
         }
     }
 
+    // default function untuk subscribe ke kafka
     async consume(topic, callback) {
         try {
             await this.consumer.connect();
@@ -46,6 +49,7 @@ class KafkaConfig {
 
 }
 
+// buat instance dan freeze untuk mencegah perubahan properties pada object
 const kafkaConfigInstance = Object.freeze(new KafkaConfig());
 
 module.exports = kafkaConfigInstance;

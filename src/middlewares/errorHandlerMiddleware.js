@@ -15,6 +15,7 @@ const errorHandler = async (err, req, res, next) => {
 		originalErr: err
 	}
     winstonConfig.error(errorLog);
+	// publish error log ke kafka
 	await kafka.produce(process.env.KAFKA_TOPIC, [{
 		key: "error-log",
 		value: JSON.stringify(errorLog)
