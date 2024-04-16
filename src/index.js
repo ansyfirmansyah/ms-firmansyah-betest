@@ -2,8 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const swaggerUi = require("swagger-ui-express");
 
-const db = require('../config/database/mongo');
-const cache = require('../config/database/redis');
+// init db dan worker
+require('../config/database/mongo');
+require('../config/database/redis');
+require('./worker/activityLogConsumer');
+
 const logger = require('./middlewares/loggerMiddleware');
 const errorHandler = require('./middlewares/errorHandlerMiddleware');
 const jwtMiddleware = require('./middlewares/jwtMiddleware');
@@ -11,9 +14,6 @@ const status = require('./helpers/statusHelper');
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
 const apiDocumentation = require("./apidoc.json");
-
-// call consumer kafka
-// require('./worker/userConsumer');
 
 const app = express();
 const port = process.env.PORT; // port aplikasi sesuai env

@@ -1,4 +1,5 @@
 const { Kafka, logLevel } = require('kafkajs');
+const groupId = 'activity-log-group';
 
 class KafkaConfig {
     constructor() {
@@ -14,7 +15,7 @@ class KafkaConfig {
             },
         });
         this.producer = this.kafka.producer();
-        this.consumer = this.kafka.consumer({ groupId: 'user-group' })
+        this.consumer = this.kafka.consumer({ groupId: groupId })
     }
 
     // default function untuk publish ke kafka

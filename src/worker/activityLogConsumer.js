@@ -1,21 +1,17 @@
 const kafka = require('../../config/queue/kafkaConfig');
+const ActivityLogRepository = require('../repositories/activityLogRepository');
 
-// buat consumer baru
-const consumer = kafka.consumer({
-    groupId: 'new-user-group'
-});
+const activityLogRepository = new ActivityLogRepository();
 
 // consume message dari kafka kemudian update log di mongo db
 const run = async () => {
-    kafka.consume(process.env.KAFKA_TOPIC, async ({ topic, partition, message }) => {
-        console.log('topic>> ', topic);
-        console.log('partition>> ', partition);
-        console.log('message key>> ', message.key.toString());
-        console.log('message value>> ', message.value.toString());
+    kafka.consume(process.env.KAFKA_TOPIC, async (topic, partition, message) => {
+        const data = JSON.parse(message.value.toString());
+        await activityLogRepository.create(data);
     })
 }
 
-run().catch(e => console.error(`[example/consumer] ${e.message}`, e))
+run().catch(e => console.error(`[Consumer Error - ${groupId}] ${e.message}`, e))
 
 // catch error kemudian close koneksi
 const errorTypes = ['unhandledRejection', 'uncaughtException']
