@@ -8,44 +8,24 @@ class BaseRepository {
     }
 
     async create(data) {
-        try {
-            const newItem = new this.model(data);
+        const newItem = new this.model(data);
             return await newItem.save();
-        } catch (error) {
-            throw error;
-        }
     }
 
     async findById(id) {
-        try {
-            return await this.model.findById(id);
-        } catch (error) {
-            throw error;
-        }
+        return await this.model.findById(id);
     }
 
     async findAll(filter) {
-        try {
-            return await this.model.find(filter).limit(10);
-        } catch (error) {
-            throw error;
-        }
+        return await this.model.find(filter).limit(10);
     }
 
     async findByIdAndUpdate(id, updateData) {
-        try {
-            return await this.model.findByIdAndUpdate(id, updateData, { new: true });
-        } catch (error) {
-            throw error;
-        }
+        return await this.model.findByIdAndUpdate(id, updateData, { new: true });
     }
 
     async findByIdAndDelete(id) {
-        try {
-            return await this.model.findByIdAndDelete(id);
-        } catch (error) {
-            throw error;
-        }
+        return await this.model.findByIdAndDelete(id);
     }
 }
 

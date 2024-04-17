@@ -3,11 +3,9 @@ const helper = {}
 // Fungsi untuk build key dari query param
 helper.getRedisKeyByReqQuery = (query) => {
     let redisKey = `allParam:default`
-    const queryKeys = Object.keys(query);
-    queryKeys.forEach(key => {
-        const value = query[key];
+    Object.entries(query).forEach(([key, value]) => {
         redisKey += `-${key}:${value}`;
-    });
+    })
     return redisKey;
 }
 

@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
+const rateLimit = require("express-rate-limit");
 const swaggerUi = require("swagger-ui-express");
 
 // init db dan worker
@@ -18,6 +20,14 @@ const apiDocumentation = require("./apidoc.json");
 const app = express();
 const port = process.env.PORT; // port aplikasi sesuai env
 
+// Gunakan middleware Helmet untuk menambahkan header keamanan
+app.use(helmet());
+// Konfigurasi rate limiter
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 menit
+    max: 100 // 100 permintaan maksimum dalam 1 menit
+});
+app.use(limiter);
 app.use(logger);
 app.use(require("sanitize").middleware);
 app.use(express.json({ limit: "5mb" }));
@@ -33,7 +43,7 @@ app.get('/', (req, res) => {
 })
 
 // endpoint default jika route tidak ada
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(status.statusCode.notfound).
         json(status.errorMessage('Not Found'));
 });

@@ -3,7 +3,7 @@ const winstonConfig = require('../../config/logging/winstonConfig');
 const status = require('../helpers/statusHelper');
 const kafka = require('../../config/queue/kafkaConfig');
 
-const errorHandler = async (err, req, res, next) => {
+const errorHandler = async (err, req, res, _next) => {
 	const ipAddress = requestIP.getClientIp(req);
 	const errorLog = {
 		ipAddress,
@@ -30,10 +30,21 @@ const errorHandler = async (err, req, res, next) => {
 		message = 'Something went wrong [code 1000]'
 		statusCode = status.statusCode.error
 	}
-		// default error message ketika uncaught error terkait reference error
+	// default error message ketika uncaught error terkait reference error
 	if (err.name === 'ReferenceError') {
 		message = 'Something went wrong [code 1001]'
 		statusCode = status.statusCode.error
+	}
+	// default error message mongoose untuk code 11000
+	if (err.name === 'MongoServerError' && err.code === 11000) {
+		message = 'Data already exist - ' + 
+			(err.keyValue ? Object.keys(err.keyValue) + " : " + Object.values(err.keyValue) : '')
+		statusCode = status.statusCode.bad
+	}
+	// default error message mongoose jika id doc tidak valid
+	if (err.kind === 'ObjectId' && err.name === 'CastError') {
+		message = 'Invalid Id'
+		statusCode = status.statusCode.bad
 	}
 	res.status(statusCode).json(status.errorMessage(message));
 }
