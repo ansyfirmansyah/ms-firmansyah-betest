@@ -13,4 +13,6 @@ mongoose.connect(mongoURI, { dbName: 'db_firmansyah_betest' })
     console.error('Koneksi MongoDB gagal:', err);
   });
 
+mongoose.connection.syncIndexes();
+
 module.exports = mongoose;
